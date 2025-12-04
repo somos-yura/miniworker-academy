@@ -1,0 +1,337 @@
+---
+import MessageCard from './MessageCard.astro';
+
+interface SystemMessage {
+	message: string;
+	name: string;
+	role: string;
+	avatar?: string;
+}
+
+interface Props {
+	id?: string;
+	title: string;
+	titleAccent: string;
+	subtitle: string;
+	messages: SystemMessage[];
+}
+
+const { id, title, titleAccent, subtitle, messages } = Astro.props;
+---
+
+<section class="messages-section" id={id}>
+	<div class="messages-container">
+		<h2 class="messages-title">
+			{title} <span class="messages-title-accent">{titleAccent}</span>
+		</h2>
+		<p class="messages-subtitle">{subtitle}</p>
+
+		<div class="messages-carousel">
+			<button class="carousel-btn carousel-btn-prev" id="prevBtn" aria-label="Previous message">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<polyline points="15 18 9 12 15 6"></polyline>
+				</svg>
+			</button>
+			<div class="messages-slider-wrapper">
+				<div class="messages-slider" id="messagesSlider">
+					{messages.map((message) => (
+						<MessageCard
+							message={message.message}
+							name={message.name}
+							role={message.role}
+							avatar={message.avatar}
+						/>
+					))}
+				</div>
+			</div>
+			<button class="carousel-btn carousel-btn-next" id="nextBtn" aria-label="Next message">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<polyline points="9 18 15 12 9 6"></polyline>
+				</svg>
+			</button>
+		</div>
+	</div>
+</section>
+
+<style>
+	.messages-section {
+		background: #ffffff;
+		padding: 6rem 3rem;
+		position: relative;
+	}
+
+	.messages-container {
+		max-width: 1600px;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	.messages-title {
+		font-size: 3.5rem;
+		font-weight: 700;
+		text-align: center;
+		color: #1e3a8a;
+		margin: 0 0 1.5rem 0;
+		line-height: 1.2;
+		opacity: 0;
+		transform: translateY(20px);
+		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+	}
+
+	.messages-title.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.messages-title-accent {
+		color: #38bdf8;
+	}
+
+	.messages-subtitle {
+		font-size: 1.25rem;
+		text-align: center;
+		color: #64748b;
+		max-width: 800px;
+		margin: 0 auto 4rem auto;
+		line-height: 1.7;
+		opacity: 0;
+		transform: translateY(20px);
+		transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
+	}
+
+	.messages-subtitle.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.messages-carousel {
+		position: relative;
+		max-width: 900px;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		width: 100%;
+	}
+
+	.messages-slider-wrapper {
+		flex: 1;
+		overflow: hidden;
+		position: relative;
+		min-width: 0;
+		width: 100%;
+		padding: 4px 0;
+	}
+
+	.messages-slider {
+		display: flex;
+		gap: 2rem;
+		transition: transform 0.5s ease-in-out;
+		will-change: transform;
+	}
+
+	.messages-slider > * {
+		flex: 0 0 calc(100% - 0px);
+		width: calc(100% - 0px);
+		min-width: calc(100% - 0px);
+		max-width: calc(100% - 0px);
+		box-sizing: border-box;
+	}
+
+	.carousel-btn {
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		border: 1px solid #e0f2fe;
+		background: #f1f7fa;
+		color: #38bdf8;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		flex-shrink: 0;
+		z-index: 10;
+	}
+
+	.carousel-btn:hover {
+		background: #38bdf8;
+		color: white;
+		border-color: #38bdf8;
+	}
+
+	@media (max-width: 1024px) {
+		.messages-section {
+			padding: 4rem 2rem;
+		}
+
+		.messages-title {
+			font-size: 2.5rem;
+		}
+
+		.messages-subtitle {
+			font-size: 1.125rem;
+			margin-bottom: 3rem;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.messages-section {
+			padding: 4rem 2rem 5rem 2rem;
+		}
+
+		.messages-title {
+			font-size: 2.5rem;
+			margin-bottom: 1.25rem;
+		}
+
+		.messages-subtitle {
+			font-size: 1.125rem;
+			margin-bottom: 3rem;
+			line-height: 1.65;
+		}
+
+		.messages-carousel {
+			gap: 0.75rem;
+		}
+
+		.messages-slider {
+			gap: 0;
+		}
+
+		.messages-slider > * {
+			flex: 0 0 100%;
+			width: 100%;
+			min-width: 100%;
+			max-width: 100%;
+		}
+
+		.carousel-btn {
+			width: 44px;
+			height: 44px;
+			flex-shrink: 0;
+		}
+
+		.carousel-btn svg {
+			width: 18px;
+			height: 18px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.messages-section {
+			padding: 3rem 1.5rem 4rem 1.5rem;
+		}
+
+		.messages-title {
+			font-size: 2rem;
+			margin-bottom: 1rem;
+		}
+
+		.messages-subtitle {
+			font-size: 1rem;
+			margin-bottom: 2.5rem;
+			line-height: 1.6;
+		}
+
+		.messages-carousel {
+			gap: 0.5rem;
+		}
+
+		.messages-slider {
+			gap: 0;
+		}
+
+		.messages-slider > * {
+			flex: 0 0 100%;
+			width: 100%;
+			min-width: 100%;
+			max-width: 100%;
+		}
+
+		.carousel-btn {
+			width: 40px;
+			height: 40px;
+		}
+
+		.carousel-btn svg {
+			width: 16px;
+			height: 16px;
+		}
+	}
+</style>
+
+<script is:inline>
+	(function() {
+		function initCarousel() {
+			const slider = document.getElementById('messagesSlider');
+			const prevBtn = document.getElementById('prevBtn');
+			const nextBtn = document.getElementById('nextBtn');
+			
+			if (!slider || !prevBtn || !nextBtn) {
+				return;
+			}
+			
+			const cards = Array.from(slider.children);
+			if (cards.length === 0) {
+				return;
+			}
+			
+			let currentIndex = 0;
+
+			function goToSlide(index) {
+				if (index < 0 || index >= cards.length) return;
+
+				currentIndex = index;
+				const wrapper = slider.parentElement;
+				if (!wrapper) return;
+
+				const wrapperRect = wrapper.getBoundingClientRect();
+				const wrapperWidth = wrapperRect.width;
+				const isMobile = window.innerWidth <= 768;
+				const gap = isMobile ? 0 : 32;
+				const translateX = -(wrapperWidth + gap) * index;
+				slider.style.transform = `translateX(${translateX}px)`;
+			}
+
+			function nextSlide() {
+				const nextIndex = (currentIndex + 1) % cards.length;
+				goToSlide(nextIndex);
+			}
+
+			function prevSlide() {
+				const prevIndex = (currentIndex - 1 + cards.length) % cards.length;
+				goToSlide(prevIndex);
+			}
+
+			prevBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				prevSlide();
+			});
+			
+			nextBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				nextSlide();
+			});
+
+			goToSlide(0);
+
+			let resizeTimeout;
+			window.addEventListener('resize', function() {
+				clearTimeout(resizeTimeout);
+				resizeTimeout = setTimeout(function() {
+					goToSlide(currentIndex);
+				}, 250);
+			});
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initCarousel);
+		} else {
+			setTimeout(initCarousel, 100);
+		}
+	})();
+</script>
+

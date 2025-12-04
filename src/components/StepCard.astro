@@ -1,0 +1,181 @@
+---
+interface Props {
+	number: string;
+	title: string;
+	description: string;
+	icon: string;
+}
+
+const { number, title, description, icon } = Astro.props;
+---
+
+<div class="step-card">
+	<div class="step-badge">{number}</div>
+	<div class="step-icon" set:html={icon}></div>
+	<h3 class="step-title">{title}</h3>
+	<p class="step-description">{description}</p>
+</div>
+
+<style>
+	.step-card {
+		position: relative;
+		background: #1e293b;
+		border: 1px solid #334155;
+		border-radius: 1rem;
+		padding: 2rem;
+		transition: all 0.3s ease;
+		opacity: 0;
+		transform: translateY(30px);
+	}
+
+	.step-card.visible {
+		animation: cardReveal 0.6s ease-out forwards;
+	}
+
+	@keyframes cardReveal {
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.step-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 24px rgba(56, 189, 248, 0.1);
+		border-color: #38bdf8;
+	}
+
+	.step-badge {
+		position: absolute;
+		top: -12px;
+		right: 1.5rem;
+		width: 40px;
+		height: 40px;
+		background: #38bdf8;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		font-weight: 700;
+		font-size: 1rem;
+		z-index: 1;
+	}
+
+	.step-icon {
+		width: 64px;
+		height: 64px;
+		background: rgba(56, 189, 248, 0.1);
+		border-radius: 0.75rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 1.5rem;
+		color: #0284c7;
+		transition: transform 0.3s ease;
+	}
+
+	.step-card:hover .step-icon {
+		animation: bounce-rotate 0.6s ease;
+	}
+
+	@keyframes bounce-rotate {
+		0% {
+			transform: translateY(0) rotate(0deg);
+		}
+		50% {
+			transform: translateY(-8px) rotate(10deg);
+		}
+		100% {
+			transform: translateY(0) rotate(0deg);
+		}
+	}
+
+	.step-icon svg {
+		width: 32px;
+		height: 32px;
+	}
+
+	.step-title {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #ffffff;
+		margin: 0 0 1rem 0;
+	}
+
+	.step-description {
+		font-size: 1rem;
+		color: #cbd5e1;
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	@media (max-width: 768px) {
+		.step-card {
+			padding: 2rem;
+		}
+
+		.step-badge {
+			width: 36px;
+			height: 36px;
+			font-size: 0.9375rem;
+			top: -10px;
+			right: 1.25rem;
+		}
+
+		.step-icon {
+			width: 60px;
+			height: 60px;
+			margin-bottom: 1.25rem;
+		}
+
+		.step-icon svg {
+			width: 30px;
+			height: 30px;
+		}
+
+		.step-title {
+			font-size: 1.375rem;
+			margin-bottom: 0.875rem;
+		}
+
+		.step-description {
+			font-size: 1rem;
+			line-height: 1.65;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.step-card {
+			padding: 1.75rem;
+		}
+
+		.step-badge {
+			width: 32px;
+			height: 32px;
+			font-size: 0.875rem;
+			top: -8px;
+			right: 1rem;
+		}
+
+		.step-icon {
+			width: 56px;
+			height: 56px;
+			margin-bottom: 1.125rem;
+		}
+
+		.step-icon svg {
+			width: 28px;
+			height: 28px;
+		}
+
+		.step-title {
+			font-size: 1.25rem;
+		}
+
+		.step-description {
+			font-size: 0.9375rem;
+		}
+	}
+</style>
+

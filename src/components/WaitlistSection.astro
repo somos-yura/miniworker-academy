@@ -1,0 +1,511 @@
+---
+interface Props {
+	id?: string;
+}
+
+const { id } = Astro.props;
+---
+
+<section class="waitlist-section" id={id}>
+	<div class="waitlist-container">
+		<div class="waitlist-card">
+			<div class="badge">
+				<svg class="rocket-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+					<path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+					<path d="M9 12H4"></path>
+					<path d="M20 12h-5"></path>
+					<circle cx="12" cy="12" r="1"></circle>
+				</svg>
+				<span>Próximamente</span>
+			</div>
+
+			<h2 class="waitlist-title">
+				Sé de los primeros en <span class="waitlist-title-accent">transformar tu carrera</span>
+			</h2>
+
+			<p class="waitlist-description">
+				Estamos preparando algo increíble. <br>  Únete y obtén <strong>beneficios exclusivos</strong> en el lanzamiento.
+			</p>
+
+			<form class="waitlist-form" id="waitlistForm">
+				<div class="form-group">
+				<input
+					type="email"
+					id="emailInput"
+					class="email-input"
+					placeholder="tu@email.com"
+					required
+					maxlength="60"
+					aria-label="Email address"
+				/>
+					<button type="submit" class="submit-btn" id="submitBtn">
+						<span>Unirme</span>
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<polyline points="9 18 15 12 9 6"></polyline>
+						</svg>
+					</button>
+				</div>
+				<div class="form-message" id="formMessage"></div>
+			</form>
+
+			<div class="benefits">
+				<div class="benefit-item">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+						<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+					</svg>
+					<span>Notificación de lanzamiento</span>
+				</div>
+				<div class="benefit-item">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+					</svg>
+					<span>Acceso anticipado</span>
+				</div>
+				<div class="benefit-item">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<line x1="12" y1="1" x2="12" y2="23"></line>
+						<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+					</svg>
+					<span>Promociones exclusivas</span>
+				</div>
+				<div class="benefit-item">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+						<polyline points="22 4 12 14.01 9 11.01"></polyline>
+					</svg>
+					<span>Sin compromisos</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.waitlist-section {
+		background: #0f172a;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 5rem;
+	}
+
+	.waitlist-container {
+		max-width: 1400px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.waitlist-card {
+		background: #1e293b;
+		border-radius: 1.5rem;
+		padding: 3rem;
+		max-width: 800px;
+		width: 100%;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+		border: 1px solid #334155;
+		text-align: center;
+	}
+
+	.badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		background: rgba(56, 189, 248, 0.1);
+		border: 1px solid #38bdf8;
+		border-radius: 2rem;
+		color: #38bdf8;
+		font-size: 0.875rem;
+		font-weight: 500;
+		margin-bottom: 2rem;
+	}
+
+	.badge svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	.rocket-icon {
+		animation: rocketFloat 2s ease-in-out infinite;
+		transform-origin: center;
+	}
+
+	@keyframes rocketFloat {
+		0%, 100% {
+			transform: translateY(0) rotate(0deg);
+		}
+		25% {
+			transform: translateY(-4px) rotate(-5deg);
+		}
+		50% {
+			transform: translateY(-6px) rotate(0deg);
+		}
+		75% {
+			transform: translateY(-4px) rotate(5deg);
+		}
+	}
+
+	.waitlist-title {
+		font-size: 2rem;
+		font-weight: 700;
+		color: #ffffff;
+		margin: 0 0 1rem 0;
+		line-height: 1.2;
+		opacity: 0;
+		transform: translateY(20px);
+		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+	}
+
+	.waitlist-title.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.waitlist-title-accent {
+		color: #38bdf8;
+	}
+
+	.waitlist-description {
+		font-size: 1.125rem;
+		color: #cbd5e1;
+		line-height: 1.7;
+		margin: 0 0 2rem 0;
+		opacity: 0;
+		transform: translateY(20px);
+		transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
+	}
+
+	.waitlist-description.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.waitlist-description strong {
+		color: #38bdf8;
+		font-weight: 600;
+	}
+
+	.waitlist-form {
+		margin-bottom: 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.form-group {
+		display: flex;
+		gap: 0.75rem;
+		margin-bottom: 0.5rem;
+		width: 100%;
+		max-width: 500px;
+	}
+
+	.email-input {
+		flex: 1;
+		padding: 1rem 1.25rem;
+		background: #0f172a;
+		border: 1px solid #334155;
+		border-radius: 0.75rem;
+		color: #ffffff;
+		font-size: 1rem;
+		font-family: inherit;
+		transition: all 0.3s ease;
+	}
+
+	.email-input::placeholder {
+		color: #64748b;
+	}
+
+	.email-input:focus {
+		outline: none;
+		border-color: #38bdf8;
+		box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+	}
+
+	.submit-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 1rem 1.75rem;
+		background: #38bdf8;
+		color: #0f172a;
+		border: none;
+		border-radius: 0.75rem;
+		font-size: 1rem;
+		font-weight: 600;
+		font-family: inherit;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		white-space: nowrap;
+	}
+
+	.submit-btn:hover {
+		background: #0ea5e9;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+	}
+
+	.submit-btn:active {
+		transform: translateY(0);
+	}
+
+	.submit-btn:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+		transform: none;
+	}
+
+	.form-message {
+		min-height: 1.5rem;
+		font-size: 0.875rem;
+		text-align: center;
+		margin-top: 0.5rem;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.form-message.show {
+		opacity: 1;
+	}
+
+	.form-message.success {
+		color: #10b981;
+	}
+
+	.form-message.error {
+		color: #ef4444;
+	}
+
+	.benefits {
+		display: flex;
+		justify-content: center;
+		gap: 2rem;
+		margin-bottom: 2rem;
+		flex-wrap: wrap;
+	}
+
+	.benefit-item {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #cbd5e1;
+		font-size: 0.875rem;
+	}
+
+	.benefit-item svg {
+		color: #38bdf8;
+		flex-shrink: 0;
+	}
+
+	.social-proof {
+		padding-top: 2rem;
+		border-top: 1px solid #334155;
+	}
+
+	.social-proof-text {
+		font-size: 0.875rem;
+		color: #94a3b8;
+		margin: 0 0 0.75rem 0;
+	}
+
+	.avatars {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: -0.5rem;
+	}
+
+	.avatar {
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 50%;
+		background: #38bdf8;
+		color: #0f172a;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 600;
+		font-size: 0.875rem;
+		border: 2px solid #1e293b;
+		margin-left: -0.5rem;
+	}
+
+	.avatar:first-child {
+		margin-left: 0;
+	}
+
+	.avatar-count {
+		margin-left: 0.75rem;
+		color: #cbd5e1;
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	@media (max-width: 768px) {
+		.waitlist-section {
+			padding: 4rem 2rem;
+			min-height: auto;
+		}
+
+		.waitlist-card {
+			padding: 2rem 1.5rem;
+		}
+
+		.waitlist-title {
+			font-size: 2rem;
+		}
+
+		.waitlist-description {
+			font-size: 1rem;
+		}
+
+		.form-group {
+			flex-direction: column;
+		}
+
+		.submit-btn {
+			width: 100%;
+			justify-content: center;
+		}
+
+		.benefits {
+			flex-direction: column;
+			gap: 1rem;
+			align-items: flex-start;
+		}
+
+		.benefit-item {
+			font-size: 0.8125rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.waitlist-section {
+			padding: 3rem 1.5rem;
+		}
+
+		.waitlist-card {
+			padding: 1.5rem 1.25rem;
+		}
+
+		.waitlist-title {
+			font-size: 1.75rem;
+		}
+
+		.waitlist-description {
+			font-size: 0.9375rem;
+		}
+
+		.email-input {
+			padding: 0.875rem 1rem;
+			font-size: 0.9375rem;
+		}
+
+		.submit-btn {
+			padding: 0.875rem 1.5rem;
+			font-size: 0.9375rem;
+		}
+	}
+</style>
+
+<script>
+	const form = document.getElementById('waitlistForm');
+	const emailInput = document.getElementById('emailInput');
+	const submitBtn = document.getElementById('submitBtn');
+	const formMessage = document.getElementById('formMessage');
+
+	function showMessage(text: string, type: 'success' | 'error') {
+		formMessage.textContent = text;
+		formMessage.className = `form-message ${type} show`;
+		setTimeout(() => {
+			formMessage.classList.remove('show');
+		}, 5000);
+	}
+
+	function validateEmail(email: string): boolean {
+		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return re.test(email);
+	}
+
+	emailInput?.addEventListener('input', (e) => {
+		const target = e.target as HTMLInputElement;
+		if (target.value.length > 60) {
+			target.value = target.value.slice(0, 60);
+		}
+	});
+
+	emailInput?.addEventListener('paste', (e) => {
+		setTimeout(() => {
+			if (emailInput && emailInput.value.length > 60) {
+				emailInput.value = emailInput.value.slice(0, 60);
+			}
+		}, 0);
+	});
+
+	form?.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		
+		const email = emailInput?.value.trim();
+		
+		if (!email) {
+			showMessage('Por favor ingresa tu email', 'error');
+			return;
+		}
+
+		if (email.length > 60) {
+			showMessage('El email es demasiado largo', 'error');
+			return;
+		}
+
+		if (!validateEmail(email)) {
+			showMessage('Por favor ingresa un email válido', 'error');
+			return;
+		}
+
+		if (submitBtn) {
+			submitBtn.disabled = true;
+			submitBtn.innerHTML = '<span>Uniéndote...</span>';
+		}
+
+		try {
+			await handleEmailSubmission(email);
+			showMessage('¡Gracias por unirte! Te notificaremos nuestro lanzamiento.', 'success');
+			if (emailInput) emailInput.value = '';
+		} catch (error) {
+			showMessage('Hubo un error. Por favor intenta de nuevo', 'error');
+		} finally {
+			if (submitBtn) {
+				submitBtn.disabled = false;
+				submitBtn.innerHTML = '<span>Unirme</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+			}
+		}
+	});
+
+	async function handleEmailSubmission(email: string): Promise<void> {
+		const scriptURL = import.meta.env.PUBLIC_GOOGLE_SCRIPT_URL || '';
+		
+		if (!scriptURL) {
+			console.error('Google Script URL no configurada. Configura PUBLIC_GOOGLE_SCRIPT_URL en .env');
+			throw new Error('Configuración faltante');
+		}
+
+		const formData = new FormData();
+		formData.append('email', email);
+
+		const response = await fetch(scriptURL, {
+			method: 'POST',
+			mode: 'no-cors',
+			body: formData
+		});
+
+		if (!response.ok && response.type !== 'opaque') {
+			throw new Error('Error al guardar el email');
+		}
+	}
+</script>
+

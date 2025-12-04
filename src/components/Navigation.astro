@@ -1,0 +1,236 @@
+---
+const sections = [
+	{ id: 'hero', label: 'Inicio' },
+	{ id: 'features', label: 'Features' },
+	{ id: 'how-it-works', label: 'Cómo funciona' },
+	{ id: 'messages', label: 'Potenciado por IA' },
+	{ id: 'waitlist', label: 'Únete' },
+];
+---
+
+<nav class="navigation" id="navigation">
+	<div class="nav-content">
+		<div class="nav-links">
+			{sections.map((section) => (
+				<a href={`#${section.id}`} class="nav-link" data-section={section.id}>
+					{section.label}
+				</a>
+			))}
+		</div>
+		<div class="nav-indicator">
+			<div class="indicator-line"></div>
+			<div class="indicator-dot" id="indicatorDot"></div>
+		</div>
+	</div>
+</nav>
+
+<style>
+	.navigation {
+		position: fixed;
+		top: 50%;
+		right: 2rem;
+		transform: translateY(-50%);
+		z-index: 100;
+		pointer-events: none;
+	}
+
+	.nav-content {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		pointer-events: auto;
+	}
+
+	.nav-links {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		background: rgba(30, 41, 59, 0.95);
+		border: 1px solid rgba(51, 65, 85, 0.8);
+		border-radius: 1rem;
+		padding: 1rem;
+		backdrop-filter: blur(10px);
+		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+	}
+
+	.nav-link {
+		padding: 0.75rem 1.25rem;
+		color: #cbd5e1;
+		text-decoration: none;
+		font-size: 0.9375rem;
+		font-weight: 500;
+		border-radius: 0.5rem;
+		transition: all 0.3s ease;
+		white-space: nowrap;
+		position: relative;
+	}
+
+	.nav-link:hover {
+		color: #38bdf8;
+		background: rgba(56, 189, 248, 0.15);
+	}
+
+	.nav-link.active {
+		color: #38bdf8;
+		background: rgba(56, 189, 248, 0.2);
+		font-weight: 600;
+	}
+
+	.nav-indicator {
+		position: relative;
+		width: 2px;
+		height: 200px;
+		background: rgba(51, 65, 85, 0.8);
+		border-radius: 2px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.indicator-line {
+		position: absolute;
+		width: 2px;
+		height: 100%;
+		background: rgba(51, 65, 85, 0.8);
+		border-radius: 2px;
+	}
+
+	.indicator-dot {
+		position: absolute;
+		width: 8px;
+		height: 8px;
+		background: #38bdf8;
+		border-radius: 50%;
+		top: 0;
+		transform: translateX(-3px);
+		transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+	}
+
+	@media (max-width: 1024px) {
+		.navigation {
+			right: 1rem;
+		}
+
+		.nav-links {
+			padding: 0.75rem;
+		}
+
+		.nav-link {
+			padding: 0.625rem 1rem;
+			font-size: 0.875rem;
+		}
+
+		.nav-indicator {
+			height: 180px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.navigation {
+			display: none;
+		}
+	}
+</style>
+
+<script is:inline>
+	(function() {
+		function initNavigation() {
+			const nav = document.getElementById('navigation');
+			const links = nav?.querySelectorAll('.nav-link');
+			const indicator = document.getElementById('indicatorDot');
+			const sections = ['hero', 'features', 'how-it-works', 'messages', 'waitlist'];
+
+			if (!nav || !links || !indicator) return;
+
+			const navLinks = Array.from(links);
+			const indicatorLine = nav.querySelector('.indicator-line');
+			const totalHeight = indicatorLine?.offsetHeight || 200;
+			const sectionCount = sections.length;
+			const step = totalHeight / (sectionCount - 1);
+
+			function updateActiveSection() {
+				const viewportCenter = window.scrollY + window.innerHeight / 2;
+				let activeIndex = 0;
+				let minDistance = Infinity;
+
+				sections.forEach((sectionId, index) => {
+					const element = document.getElementById(sectionId);
+					if (element) {
+						const rect = element.getBoundingClientRect();
+						const elementTop = window.scrollY + rect.top;
+						const elementBottom = elementTop + rect.height;
+						const elementCenter = elementTop + rect.height / 2;
+						const distance = Math.abs(viewportCenter - elementCenter);
+
+						if (viewportCenter >= elementTop - 100 && viewportCenter <= elementBottom + 100) {
+							if (distance < minDistance) {
+								minDistance = distance;
+								activeIndex = index;
+							}
+						}
+					}
+				});
+
+				if (minDistance === Infinity) {
+					sections.forEach((sectionId, index) => {
+						const element = document.getElementById(sectionId);
+						if (element) {
+							const rect = element.getBoundingClientRect();
+							const elementTop = window.scrollY + rect.top;
+							const elementCenter = elementTop + rect.height / 2;
+							const distance = Math.abs(viewportCenter - elementCenter);
+
+							if (distance < minDistance) {
+								minDistance = distance;
+								activeIndex = index;
+							}
+						}
+					});
+				}
+
+				navLinks.forEach((link, index) => {
+					if (index === activeIndex) {
+						link.classList.add('active');
+					} else {
+						link.classList.remove('active');
+					}
+				});
+
+				const newTop = activeIndex * step;
+				indicator.style.top = `${newTop}px`;
+			}
+
+			navLinks.forEach((link, index) => {
+				link.addEventListener('click', (e) => {
+					e.preventDefault();
+					const sectionId = link.getAttribute('data-section');
+					const element = document.getElementById(sectionId);
+					if (element) {
+						const offsetTop = element.offsetTop - 100;
+						window.scrollTo({
+							top: offsetTop,
+							behavior: 'smooth'
+						});
+					}
+				});
+			});
+
+			let scrollTimeout;
+			function handleScroll() {
+				clearTimeout(scrollTimeout);
+				scrollTimeout = setTimeout(updateActiveSection, 10);
+			}
+
+			window.addEventListener('scroll', handleScroll, { passive: true });
+			updateActiveSection();
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initNavigation);
+		} else {
+			initNavigation();
+		}
+	})();
+</script>
+

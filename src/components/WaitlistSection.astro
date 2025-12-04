@@ -89,7 +89,7 @@ const { id } = Astro.props;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		padding: 5rem;
+		padding: 5rem
 	}
 
 	.waitlist-container {
@@ -469,7 +469,7 @@ const { id } = Astro.props;
 
 		if (submitBtn) {
 			submitBtn.disabled = true;
-			submitBtn.innerHTML = '<span>Uniéndote...</span>';
+			submitBtn.textContent = 'Uniéndote a la lista...';
 		}
 
 		try {
@@ -481,7 +481,7 @@ const { id } = Astro.props;
 		} finally {
 			if (submitBtn) {
 				submitBtn.disabled = false;
-				submitBtn.innerHTML = '<span>Unirme</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+				submitBtn.innerHTML = '<span>Inscribirme</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>';
 			}
 		}
 	});

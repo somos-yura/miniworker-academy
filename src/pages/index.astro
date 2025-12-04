@@ -1,11 +1,216 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import HeroSection from '../components/HeroSection.astro';
+import FeaturesSection from '../components/FeaturesSection.astro';
+import HowItWorksSection from '../components/HowItWorksSection.astro';
+import MessagesSection from '../components/MessagesSection.astro';
+import WaitlistSection from '../components/WaitlistSection.astro';
+import Footer from '../components/Footer.astro';
+import { features } from '../data/features';
+import { howItWorksSteps } from '../data/howItWorks';
+import { systemMessages } from '../data/messages';
+import logo from '../assets/miniworker2sinbg.svg';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const typingTexts = ['proyectos reales', 'productos con impacto', 'habilidades prácticas'];
 ---
 
 <Layout>
-	<Welcome />
+	<Navigation />
+	<div class="container hero-dark" id="hero">
+		<HeroSection
+			logo={logo}
+			badgeText="Plataforma potenciada por IA"
+			headlineStatic="Transforma la teoría en"
+			description="Plataforma donde podrás impulsar tu crecimiento como desarrollador a través de retos basados en problemáticas sociales."
+			ctaText="Únete a la lista de espera"
+			ctaSubtext="Sé de los primeros en acceder con ventajas exclusivas."
+		/>
+	</div>
+
+	<FeaturesSection
+		id="features"
+		title="Construye tu"
+		titleAccent="trayectoria tech"
+		subtitle="Una plataforma de aprendizaje práctico diseñada para conectar la teoría académica con los desafíos reales de la industria del software."
+		features={features}
+	/>
+
+	<HowItWorksSection
+		id="how-it-works"
+		title="¿Cómo"
+		titleAccent="funciona?"
+		subtitle="Un proceso simple y efectivo para transformar tu carrera"
+		steps={howItWorksSteps}
+	/>
+
+	<MessagesSection
+		id="messages"
+		title="La IA como nuestra"
+		titleAccent = "Aliada"
+		subtitle="Usamos el poder de la Inteligencia Artificial para apoyarte en tu aprendizaje"
+		messages={systemMessages}
+	/>
+
+	<WaitlistSection id="waitlist" />
+
+	<Footer />
 </Layout>
+
+<style>
+	.container {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		padding: 3rem;
+		padding-top: 12rem;
+		padding-bottom: 5rem;
+		overflow-x: hidden;
+	}
+
+	.hero-dark {
+		background: #0f172a;
+		color: #ffffff;
+	}
+
+	.hero-dark::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 50%;
+		height: 50%;
+		background: radial-gradient(circle, #38bdf8 0%, transparent 70%);
+		opacity: 0.1;
+		filter: blur(80px);
+		pointer-events: none;
+	}
+
+
+	@media (max-width: 1024px) {
+		.container {
+			padding: 2rem;
+			padding-top: 8rem;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.container {
+			padding: 2rem 1.5rem;
+			padding-top: 7rem;
+			padding-bottom: 4rem;
+			height: auto;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.container {
+			padding: 1.5rem 1rem;
+			padding-top: 6rem;
+			padding-bottom: 3rem;
+		}
+	}
+</style>
+
+<script define:vars={{ typingTexts }}>
+	const texts = typingTexts;
+	let currentTextIndex = 0;
+	let currentCharIndex = 0;
+	let isDeleting = false;
+	let typingSpeed = 60;
+
+	function typeText() {
+		const typedElement = document.getElementById('typedText');
+		if (!typedElement) return;
+
+		const currentText = texts[currentTextIndex];
+
+		if (isDeleting) {
+			typedElement.textContent = currentText.substring(0, currentCharIndex - 1);
+			currentCharIndex--;
+			typingSpeed = 30;
+		} else {
+			typedElement.textContent = currentText.substring(0, currentCharIndex + 1);
+			currentCharIndex++;
+			typingSpeed = 60;
+		}
+
+		if (!isDeleting && currentCharIndex === currentText.length) {
+			typingSpeed = 1200;
+			isDeleting = true;
+		} else if (isDeleting && currentCharIndex === 0) {
+			isDeleting = false;
+			currentTextIndex = (currentTextIndex + 1) % texts.length;
+			typingSpeed = 300;
+		}
+
+		setTimeout(typeText, typingSpeed);
+	}
+
+	function initScrollAnimations() {
+		const observerOptions = {
+			threshold: 0.1,
+			rootMargin: '0px 0px -50px 0px'
+		};
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+				}
+			});
+		}, observerOptions);
+
+		// Observe feature cards
+		const featureCards = document.querySelectorAll('.feature-card');
+		featureCards.forEach((card, index) => {
+			card.style.animationDelay = `${index * 0.1}s`;
+			observer.observe(card);
+		});
+
+		// Observe step cards
+		const stepCards = document.querySelectorAll('.step-card');
+		stepCards.forEach((card, index) => {
+			card.style.animationDelay = `${index * 0.15}s`;
+			observer.observe(card);
+		});
+
+		// Observe section titles and subtitles
+		const sectionTitles = document.querySelectorAll('.features-title, .how-it-works-title, .messages-title, .waitlist-title');
+		sectionTitles.forEach((title) => {
+			observer.observe(title);
+		});
+
+		const sectionSubtitles = document.querySelectorAll('.features-subtitle, .how-it-works-subtitle, .messages-subtitle, .waitlist-description');
+		sectionSubtitles.forEach((subtitle) => {
+			observer.observe(subtitle);
+		});
+	}
+
+	function initMagneticHover() {
+		const buttons = document.querySelectorAll('.btn');
+		
+		buttons.forEach((button) => {
+			button.addEventListener('mousemove', (e) => {
+				const rect = button.getBoundingClientRect();
+				const x = e.clientX - rect.left - rect.width / 2;
+				const y = e.clientY - rect.top - rect.height / 2;
+				
+				button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) translateY(-2px)`;
+			});
+			
+			button.addEventListener('mouseleave', () => {
+				button.style.transform = 'translate(0, 0)';
+			});
+		});
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		setTimeout(typeText, 1000);
+		setTimeout(() => {
+			initScrollAnimations();
+			initMagneticHover();
+		}, 500);
+	});
+</script>

@@ -145,25 +145,9 @@ PUBLIC_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/TU_ID_AQUI/exec
 - Verifica que el script tenga permisos para editar la hoja
 - Revisa los logs en Apps Script: **Ver** → **Registros de ejecución**
 
-## Seguridad Adicional (Opcional)
-
-Si quieres agregar una capa de seguridad, puedes:
-
-1. **Agregar un token secreto:**
-   - En Apps Script, agrega validación del token
-   - En tu `.env`, agrega `PUBLIC_GOOGLE_SCRIPT_TOKEN`
-   - Envía el token en el FormData
-
-2. **Limitar por dominio:**
-   - En Apps Script, valida el origen de la petición
-
-3. **Rate limiting:**
-   - Limita cuántos emails puede enviar la misma IP en un tiempo determinado
-
 ## Notas Importantes
 
 - Los emails se guardan con la fecha y hora automáticamente
 - El script valida duplicados para evitar emails repetidos
 - Puedes exportar los emails desde Google Sheets cuando quieras
 - La URL de la aplicación web es pública, pero solo acepta emails válidos
-

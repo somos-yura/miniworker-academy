@@ -415,11 +415,12 @@ const { id } = Astro.props;
 
 <script>
 	const form = document.getElementById('waitlistForm');
-	const emailInput = document.getElementById('emailInput');
-	const submitBtn = document.getElementById('submitBtn');
-	const formMessage = document.getElementById('formMessage');
+	const emailInput = document.getElementById('emailInput') as HTMLInputElement | null;
+	const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement | null;
+	const formMessage = document.getElementById('formMessage') as HTMLElement | null;
 
 	function showMessage(text: string, type: 'success' | 'error') {
+		if (!formMessage) return;
 		formMessage.textContent = text;
 		formMessage.className = `form-message ${type} show`;
 		setTimeout(() => {
@@ -439,10 +440,13 @@ const { id } = Astro.props;
 		}
 	});
 
-	emailInput?.addEventListener('paste', (e) => {
+	emailInput?.addEventListener('paste', () => {
 		setTimeout(() => {
-			if (emailInput && emailInput.value.length > 60) {
-				emailInput.value = emailInput.value.slice(0, 60);
+			if (emailInput) {
+				const input = emailInput as HTMLInputElement;
+				if (input.value.length > 60) {
+					input.value = input.value.slice(0, 60);
+				}
 			}
 		}, 0);
 	});
@@ -450,7 +454,8 @@ const { id } = Astro.props;
 	form?.addEventListener('submit', async (e) => {
 		e.preventDefault();
 		
-		const email = emailInput?.value.trim();
+		if (!emailInput) return;
+		const email = emailInput.value.trim();
 		
 		if (!email) {
 			showMessage('Por favor ingresa tu email', 'error');
@@ -475,8 +480,8 @@ const { id } = Astro.props;
 		try {
 			await handleEmailSubmission(email);
 			showMessage('¡Gracias por unirte! Te notificaremos nuestro lanzamiento.', 'success');
-			if (emailInput) emailInput.value = '';
-		} catch (error) {
+			emailInput.value = '';
+		} catch {
 			showMessage('Hubo un error. Por favor intenta de nuevo', 'error');
 		} finally {
 			if (submitBtn) {
@@ -490,7 +495,6 @@ const { id } = Astro.props;
 		const scriptURL = import.meta.env.PUBLIC_GOOGLE_SCRIPT_URL || '';
 		
 		if (!scriptURL) {
-			console.error('Google Script URL no configurada. Configura PUBLIC_GOOGLE_SCRIPT_URL en .env');
 			throw new Error('Configuración faltante');
 		}
 

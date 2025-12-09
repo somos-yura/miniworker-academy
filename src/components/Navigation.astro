@@ -201,7 +201,7 @@ const sections = [
 				indicator.style.top = `${newTop}px`;
 			}
 
-			navLinks.forEach((link, index) => {
+			navLinks.forEach((link) => {
 				link.addEventListener('click', (e) => {
 					e.preventDefault();
 					const sectionId = link.getAttribute('data-section');

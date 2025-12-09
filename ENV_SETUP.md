@@ -19,10 +19,8 @@ PUBLIC_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/AKfycbx1234567890abc
 
 ## Importante
 
-- El archivo `.env` NO debe subirse a Git (ya está en .gitignore)
 - Después de crear o modificar `.env`, reinicia el servidor de desarrollo
 - **En producción (Vercel)**: Configura esta variable en Vercel Dashboard → Settings → Environment Variables
-- Ver `VERCEL_DEPLOY.md` para instrucciones detalladas de despliegue
 
 ## Verificar que funciona
 

@@ -4,7 +4,7 @@
 
 1. Ve a [Google Sheets](https://sheets.google.com)
 2. Crea una nueva hoja de cálculo
-3. Nombra la hoja (ej: "Waitlist Miniworker Academy")
+3. Nombra la hoja (ej: "Waitlist YURA")
 4. En la primera fila, agrega estos encabezados:
    - **Columna A**: `Fecha`
    - **Columna B**: `Email`

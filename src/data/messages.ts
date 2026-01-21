@@ -1,7 +1,7 @@
 export const systemMessages = [
 	{
 		message: 'Veo que implementaste la autenticación con JWT. Buena elección! Considera mover las claves secretas a variables de entorno en lugar de hardcodearlas. Esto mejorará la seguridad de tu aplicación.',
-		name: 'Miniworker IA',
+		name: 'YURA IA',
 		role: 'Feedback',
 	},
 	{
@@ -11,7 +11,7 @@ export const systemMessages = [
 	},
 	{
 		message: 'Tu implementación de la API REST está bien estructurada. Te sugiero separar la lógica de negocio en servicios independientes en lugar de tenerla toda en los controladores. Esto hará tu código más mantenible y testeable.',
-		name: 'Miniworker IA',
+		name: 'YURA IA',
 		role: 'Feedback',
 	},
 	{
@@ -21,7 +21,7 @@ export const systemMessages = [
 	},
 	{
 		message: 'Noto que usaste async/await correctamente en tu código. Excelente. Considera agregar manejo de errores más específico para cada tipo de excepción, esto ayudará en el debugging.',
-		name: 'Miniworker IA',
+		name: 'YURA IA',
 		role: 'Feedback',
 	},
 ];

@@ -20,7 +20,7 @@ const {
 
 <div class="hero-container">
 	<div class="logo-container">
-		<img class="logo" src={logo.src} alt="Miniworker Academy" />
+		<img class="logo" src={logo.src} alt="YURA" />
 	</div>
 
 	<div class="badge">
@@ -64,18 +64,15 @@ const {
 		align-items: center;
 		position: relative;
 		width: 100%;
-		min-height: 200px;
+		min-height: auto;
 	}
 
 	.logo {
-		max-width: 600px;
+		max-width: 725px;
 		width: 100%;
 		height: auto;
 		transition: opacity 0.3s ease;
-		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translateX(-50%) scale(0.8);
+		position: relative;
 		opacity: 0;
 		animation: logoEntrance 1s ease-out 0.3s forwards;
 	}
@@ -83,11 +80,11 @@ const {
 	@keyframes logoEntrance {
 		0% {
 			opacity: 0;
-			transform: translateX(-50%) scale(0.8) translateY(-20px);
+			transform: scale(0.95) translateY(-5px);
 		}
 		100% {
 			opacity: 1;
-			transform: translateX(-50%) scale(1) translateY(0);
+			transform: scale(1) translateY(0);
 		}
 	}
 
@@ -123,7 +120,7 @@ const {
 	}
 
 	.headline {
-		font-size: 5rem;
+		font-size: 4.7rem;
 		font-weight: 700;
 		line-height: 1.1;
 		margin: 0;
@@ -248,7 +245,7 @@ const {
 		}
 
 		.logo-container {
-			min-height: 180px;
+			min-height: auto;
 		}
 
 		.logo {
@@ -304,7 +301,7 @@ const {
 		}
 
 		.logo-container {
-			min-height: 160px;
+			min-height: auto;
 		}
 
 		.logo {

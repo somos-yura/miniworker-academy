@@ -1,4 +1,4 @@
-# MiniWorker Academy
+# YURA
 
 Landing Page
 

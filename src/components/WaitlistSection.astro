@@ -28,26 +28,9 @@ const { id } = Astro.props;
 				Estamos preparando algo increíble. <br>  Únete y obtén <strong>beneficios exclusivos</strong> en el lanzamiento.
 			</p>
 
-			<form class="waitlist-form" id="waitlistForm">
-				<div class="form-group">
-				<input
-					type="email"
-					id="emailInput"
-					class="email-input"
-					placeholder="tu@email.com"
-					required
-					maxlength="60"
-					aria-label="Email address"
-				/>
-					<button type="submit" class="submit-btn" id="submitBtn">
-						<span>Unirme</span>
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<polyline points="9 18 15 12 9 6"></polyline>
-						</svg>
-					</button>
-				</div>
-				<div class="form-message" id="formMessage"></div>
-			</form>
+			<div class="waitlist-form">
+				<a href="https://app-yura.vercel.app/register" target="_blank" rel="noopener noreferrer" class="submit-btn">SIGN UP</a>
+			</div>
 
 			<div class="benefits">
 				<div class="benefit-item">
@@ -228,7 +211,7 @@ const { id } = Astro.props;
 	}
 
 	.submit-btn {
-		display: flex;
+		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
 		padding: 1rem 1.75rem;
@@ -242,6 +225,7 @@ const { id } = Astro.props;
 		cursor: pointer;
 		transition: all 0.3s ease;
 		white-space: nowrap;
+		text-decoration: none;
 	}
 
 	.submit-btn:hover {
@@ -412,104 +396,4 @@ const { id } = Astro.props;
 		}
 	}
 </style>
-
-<script>
-	const form = document.getElementById('waitlistForm');
-	const emailInput = document.getElementById('emailInput') as HTMLInputElement | null;
-	const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement | null;
-	const formMessage = document.getElementById('formMessage') as HTMLElement | null;
-
-	function showMessage(text: string, type: 'success' | 'error') {
-		if (!formMessage) return;
-		formMessage.textContent = text;
-		formMessage.className = `form-message ${type} show`;
-		setTimeout(() => {
-			formMessage.classList.remove('show');
-		}, 5000);
-	}
-
-	function validateEmail(email: string): boolean {
-		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return re.test(email);
-	}
-
-	emailInput?.addEventListener('input', (e) => {
-		const target = e.target as HTMLInputElement;
-		if (target.value.length > 60) {
-			target.value = target.value.slice(0, 60);
-		}
-	});
-
-	emailInput?.addEventListener('paste', () => {
-		setTimeout(() => {
-			if (emailInput) {
-				const input = emailInput as HTMLInputElement;
-				if (input.value.length > 60) {
-					input.value = input.value.slice(0, 60);
-				}
-			}
-		}, 0);
-	});
-
-	form?.addEventListener('submit', async (e) => {
-		e.preventDefault();
-		
-		if (!emailInput) return;
-		const email = emailInput.value.trim();
-		
-		if (!email) {
-			showMessage('Por favor ingresa tu email', 'error');
-			return;
-		}
-
-		if (email.length > 60) {
-			showMessage('El email es demasiado largo', 'error');
-			return;
-		}
-
-		if (!validateEmail(email)) {
-			showMessage('Por favor ingresa un email válido', 'error');
-			return;
-		}
-
-		if (submitBtn) {
-			submitBtn.disabled = true;
-			submitBtn.textContent = 'Uniéndote a la lista...';
-		}
-
-		try {
-			await handleEmailSubmission(email);
-			showMessage('¡Gracias por unirte! Te notificaremos nuestro lanzamiento.', 'success');
-			emailInput.value = '';
-		} catch {
-			showMessage('Hubo un error. Por favor intenta de nuevo', 'error');
-		} finally {
-			if (submitBtn) {
-				submitBtn.disabled = false;
-				submitBtn.innerHTML = '<span>Inscribirme</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-			}
-		}
-	});
-
-	async function handleEmailSubmission(email: string): Promise<void> {
-		const scriptURL = import.meta.env.PUBLIC_GOOGLE_SCRIPT_URL || '';
-		
-		if (!scriptURL) {
-			throw new Error('Configuración faltante');
-		}
-
-		const formData = new FormData();
-		formData.append('email', email);
-
-		const response = await fetch(scriptURL, {
-			method: 'POST',
-			mode: 'no-cors',
-			body: formData
-		});
-
-		if (!response.ok && response.type !== 'opaque') {
-			throw new Error('Error al guardar el email');
-		}
-	}
-</script>
 

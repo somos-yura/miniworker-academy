@@ -5,6 +5,7 @@ interface Props {
 	headlineStatic: string;
 	description: string;
 	ctaText: string;
+	ctaHref: string;
 	ctaSubtext: string;
 }
 
@@ -14,6 +15,7 @@ const {
 	headlineStatic,
 	description,
 	ctaText,
+	ctaHref,
 	ctaSubtext,
 } = Astro.props;
 ---
@@ -39,7 +41,7 @@ const {
 	<p class="description">{description}</p>
 
 	<div class="cta-buttons">
-		<a href="#waitlist" class="btn btn-secondary">{ctaText}</a>
+		<a href={ctaHref} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">{ctaText}</a>
 	</div>
 	<p class="cta-subtext">{ctaSubtext}</p>
 </div>
